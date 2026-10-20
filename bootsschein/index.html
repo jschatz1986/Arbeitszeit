@@ -23,6 +23,7 @@ details{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}summar
 .installbox.show{display:flex}.installcard{max-width:520px;width:100%;background:#fff;border-radius:18px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
 .installcard h2{margin-top:0}.installcard ol{padding-left:22px;line-height:1.5}.installcard .btn{width:100%;margin-top:10px}
 </style>
+<!-- Bootsschein Trainer v7 -->
 </head><body><header class="top"><small>HAPPY NAUTICA - BOAT SKIPPER B</small><h1>Bootsschein Trainer - 100 Fragen</h1><button id="installBtn" class="btn secondary" style="margin-top:10px;background:white">App installieren</button></header>
 <main class="wrap">
 <section class="stats"><div class="stat"><b id="total">100</b><span>Fragen</span></div><div class="stat"><b id="known">0</b><span>Sicher</span></div><div class="stat"><b id="unsure">0</b><span>Unsicher</span></div><div class="stat"><b id="missed">0</b><span>Falsch</span></div></section>
@@ -53,21 +54,41 @@ function filtered(){
   return QUESTIONS.filter(q=>(cat==='Alle'||q.cat===cat)&&(src==='Alle'||(src==='Katalog'?q.catalog:!q.catalog)));
 }
 function makePool(){
-  let base=filtered();
-  // spaced repetition: missed x4, unsure x2, unseen x2, known x1
+  const base=filtered();
+  // spaced repetition: falsch x4, unsicher x2, ungelernt x2, sicher x1
   pool=[];
   base.forEach(q=>{
-    const s=state.progress[q.id]||'unseen';
-    const n=s==='missed'?4:s==='unsure'?2:s==='unseen'?2:1;
+    const st=state.progress[q.id]||'unseen';
+    const n=st==='missed'?4:st==='unsure'?2:st==='unseen'?2:1;
     for(let i=0;i<n;i++) pool.push(q.id);
   });
-  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
-  pos=0; nextLearn();
+  for(let i=pool.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [pool[i],pool[j]]=[pool[j],pool[i]];
+  }
+  pos=0;
 }
 function nextLearn(){
-  if(!pool.length){current=null;$('learnCard').innerHTML='<div class="q">Keine Fragen im Filter.</div>';return}
-  if(pos>=pool.length) makePool();
-  current=QUESTIONS.find(q=>q.id===pool[pos++]); answered=false; renderQuestion(current,$('learnCard'),true);
+  if(!pool.length || pos>=pool.length) makePool();
+  if(!pool.length){
+    current=null;
+    $('learnCard').innerHTML='<div class="q">Keine Fragen im Filter.</div>';
+    $('learnMeta').textContent='';
+    $('learnSrc').textContent='';
+    return;
+  }
+  const id=pool[pos++];
+  current=QUESTIONS.find(q=>q.id===id);
+  if(!current){
+    // Defensive fallback: rebuild the pool rather than crashing on a bad entry.
+    makePool();
+    if(!pool.length){$('learnCard').innerHTML='<div class="q">Keine Fragen verfügbar.</div>';return;}
+    const fallbackId=pool[pos++];
+    current=QUESTIONS.find(q=>q.id===fallbackId);
+    if(!current){$('learnCard').innerHTML='<div class="q">Frage konnte nicht geladen werden.</div>';return;}
+  }
+  answered=false;
+  renderQuestion(current,$('learnCard'),true);
   $('learnMeta').textContent=`Frage ${current.id} von 100`;
   $('learnSrc').textContent=current.catalog?`Katalog S. ${current.page}`:`Zusatz S. ${current.page}`;
 }
@@ -121,7 +142,7 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':
 function setMode(m){
   mode=m; document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.mode===m));
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active')); $(m+'View').classList.add('active');
-  if(m==='learn')makePool(); if(m==='exam')newExam(); if(m==='list')renderList();
+  if(m==='learn'){makePool();nextLearn();} if(m==='exam')newExam(); if(m==='list')renderList();
 }
 const cats=['Alle',...new Set(QUESTIONS.map(q=>q.cat))].sort();
 $('cat').innerHTML=cats.map(x=>`<option>${escapeHtml(x)}</option>`).join('');
@@ -130,8 +151,8 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setMode(b.dataset.mod
 $('cat').onchange=()=>setMode(mode); $('src').onchange=()=>setMode(mode); $('search').oninput=renderList;
 $('nextBtn').onclick=()=>{ $('nextBtn').hidden=true; nextLearn(); };
 $('examNext').onclick=()=>showExam(); $('newExam').onclick=newExam;
-$('reset').onclick=()=>{if(confirm('Lernfortschritt wirklich zurücksetzen?')){state={progress:{}};save();makePool();}};
-updateStats(); makePool();
+$('reset').onclick=()=>{if(confirm('Lernfortschritt wirklich zurücksetzen?')){state={progress:{}};save();makePool();nextLearn();}};
+updateStats(); makePool(); nextLearn();
 window.__bootsscheinStarted=true;
 </script>
 
