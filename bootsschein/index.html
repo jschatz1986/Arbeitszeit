@@ -23,7 +23,7 @@ details{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}summar
 .installbox.show{display:flex}.installcard{max-width:520px;width:100%;background:#fff;border-radius:18px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
 .installcard h2{margin-top:0}.installcard ol{padding-left:22px;line-height:1.5}.installcard .btn{width:100%;margin-top:10px}
 </style>
-<!-- Bootsschein Trainer v7 -->
+<!-- Bootsschein Trainer v10 -->
 </head><body><header class="top"><small>HAPPY NAUTICA - BOAT SKIPPER B</small><h1>Bootsschein Trainer - 100 Fragen</h1><button id="installBtn" class="btn secondary" style="margin-top:10px;background:white">App installieren</button></header>
 <main class="wrap">
 <section class="stats"><div class="stat"><b id="total">100</b><span>Fragen</span></div><div class="stat"><b id="known">0</b><span>Sicher</span></div><div class="stat"><b id="unsure">0</b><span>Unsicher</span></div><div class="stat"><b id="missed">0</b><span>Falsch</span></div></section>
@@ -104,6 +104,31 @@ function renderQuestion(q,el,learning){
   el.innerHTML=`${img}<div class="q">${escapeHtml(q.q)}</div><div class="opts">${q.options.map((o,i)=>`<button class="opt" data-i="${i}">${String.fromCharCode(65+i)}. ${escapeHtml(o)}</button>`).join('')}</div><div class="feedback" hidden></div>`;
   el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(q,el,Number(b.dataset.i),learning));
 }
+function explainQuestion(q){
+  const a=q.answer;
+  if([15,39,67].includes(q.id)) return 'Eine Kabellänge ist ein Zehntel einer Seemeile. Da eine Seemeile 1,852 km lang ist, ergibt sich eine Kabellänge von rund 185 m.';
+  if(q.id===21) return 'Seekarten werden berichtigt, weil Änderungen veröffentlicht werden. Die Korrekturen stehen am linken unteren Kartenrand; deshalb muss mit einer aktuell berichtigten Karte gefahren werden.';
+  if(q.id===34) return 'Eine Breitenminute entspricht ungefähr 1,852 km. Genau diese Strecke definiert eine Seemeile.';
+  if(q.id===54 || q.id===82) return 'Missweisung und Deviation sind verschiedene Kompassfehler. Die Deviation entsteht durch das schiffseigene Magnetfeld; die Missweisung durch den Unterschied zwischen geografischem und magnetischem Norden.';
+  if(q.id===69) return 'Bei der Einkreiskühlung wird direkt mit Seewasser gekühlt. Bei der Zweikreiskühlung kühlt Seewasser über einen Wärmetauscher die Kühlflüssigkeit des Motors.';
+  if(q.id===72) return 'Ein einzelnes weißes Licht ist nicht eindeutig. Es kann Topplicht, Hecklicht, Ankerlicht oder das Rundumlicht eines kleinen Fahrzeugs sein; erst die Kombination mit anderen Lichtern zeigt den Fahrzeugtyp.';
+  if(q.id===83) return 'Die Logge misst die Fahrtgeschwindigkeit. Im Skript wird dazu ein Impeller unter der Wasserlinie beschrieben, dessen Drehung auf die Anzeige übertragen wird.';
+  if(q.id===84) return 'Das Lot dient zur Bestimmung der Wassertiefe; als Hilfsmittel nennt das Skript Echolot bzw. Pfeilstock.';
+  if(q.id===88) return 'Der Schirokko baut sich langsam auf. Typische Anzeichen können schon vorher auftreten; seine größte Stärke erreicht er laut Fragenkatalog erst nach zwei bis drei Tagen.';
+  if(q.id===89) return 'Die Bora ist ein trockener, kalter und böiger Fallwind aus Nord bis Ost. Typisch ist die Borawalze; besonders im Winter kann sie sehr stark werden.';
+  if(q.q.includes('Buchstabierbezeichnung')) return 'Im Funkbuchstabieralphabet hat jeder Buchstabe ein festes Codewort, damit er über Funk eindeutig verstanden wird. Hier lautet dieses Codewort: '+a+'.';
+  if(q.q.includes('Abkürzung') || q.cat==='Kartenzeichen') return 'Seekarten verwenden feste Zeichen und Abkürzungen, damit Informationen sehr knapp dargestellt werden können. Diese Angabe muss deshalb direkt mit ihrer nautischen Bedeutung verknüpft werden: '+a+'.';
+  if(q.cat==='Seezeichen') return 'Seezeichen werden über Farbe, Form und Toppzeichen erkannt. Aus genau diesen Merkmalen ergibt sich hier: '+a+'.';
+  if(q.cat==='Lichter & Regeln' || q.cat==='Lichterführung') return 'Bei der Lichterführung entscheiden Farbe, Reihenfolge und Kombination der Lichter. Daraus erkennt man Fahrzeugtyp oder Zustand; in dieser Situation ergibt sich: '+a+'.';
+  if(q.cat==='Wetter') return 'Im Wetterteil werden die Adriawinde nach Richtung, Stärke und Entwicklung unterschieden. Die richtige Zuordnung in dieser Frage ist: '+a+'.';
+  if(q.cat==='Sicherheit & Motor') return 'Hier wird eine feste Sicherheits- oder Motorregel aus dem Skript geprüft. Entscheidend ist, welche Kontrolle oder Handlung in genau dieser Situation vorgesehen ist: '+a+'.';
+  if(q.cat==='Seenot & Sicherheit') return 'Seenotsignale und Sicherheitsregeln müssen eindeutig erkannt werden, weil sie eine unmittelbare Reaktion auslösen. Hier gilt laut Skript: '+a+'.';
+  if(q.cat==='Seemännische Praxis') return 'Diese Frage gehört zur praktischen Schiffsführung. Das Skript ordnet der beschriebenen Situation eine konkrete Handhabungsregel zu: '+a+'.';
+  if(q.cat==='Seekarte & Navigation') return 'Navigation arbeitet mit fest definierten Kartenzeichen, Koordinaten und Maßeinheiten. Hier ist wichtig, wie die Angabe auf der Seekarte gelesen oder angewendet wird: '+a+'.';
+  if(q.cat==='Funk & Buchstabieren') return 'Im Funkverkehr werden feste Begriffe und Codewörter verwendet, damit Meldungen eindeutig verstanden werden. Für diese Frage gilt: '+a+'.';
+  if(q.cat==='Vorschriften & Praxis') return 'Diese Frage prüft eine konkrete Vorschrift aus dem Skript. Wichtig ist, den Wert oder die Regel mit der richtigen Situation zu verknüpfen: '+a+'.';
+  return 'Die richtige Antwort gehört zu einer festen Definition oder Regel im Skript. Wichtig ist der Zusammenhang mit der beschriebenen Situation: '+a+'.';
+}
 function choose(q,el,i,learning){
   if(el.dataset.answered==='1') return;
   el.dataset.answered='1';
@@ -112,7 +137,7 @@ function choose(q,el,i,learning){
   const ok=i===q.correct;
   const fb=el.querySelector('.feedback'); fb.hidden=false; fb.className='feedback '+(ok?'good':'bad');
   fb.innerHTML=`<strong>${ok?'Richtig ✓':'Falsch ✕'}</strong><br>Richtige Antwort: ${escapeHtml(q.answer)}
-  <details><summary>Erklärung / nachlesen</summary><div>${escapeHtml(q.explanation)}</div><div class="source">Quelle: Happynautica_BoatSkipper_Skriptum.pdf, Seite ${q.page}</div></details>`;
+  <details><summary>Erklärung / nachlesen</summary><div>${escapeHtml(explainQuestion(q))}</div><div class="source">Quelle: Happynautica_BoatSkipper_Skriptum.pdf, Seite ${q.page}</div></details>`;
   if(learning){
     state.progress[q.id]=ok?'known':'missed'; save(); answered=true; $('nextBtn').hidden=false;
   }else{
@@ -142,7 +167,7 @@ function showExam(){
 function renderList(){
   const term=$('search').value.toLowerCase().trim();
   const a=filtered().filter(q=>!term||(q.q+' '+q.answer+' '+q.explanation).toLowerCase().includes(term));
-  $('list').innerHTML=a.map(q=>`<div class="item"><span class="badge">${q.catalog?'Katalog':'Zusatz'}</span><span class="badge">S. ${q.page}</span><b>${q.id}. ${escapeHtml(q.q)}</b><details><summary>Antwort & Erklärung</summary><div>${escapeHtml(q.answer)}</div><div class="source">${escapeHtml(q.explanation)}</div>${q.image?`<img class="qimg" src="${q.image}" alt="">`:''}</details></div>`).join('');
+  $('list').innerHTML=a.map(q=>`<div class="item"><span class="badge">${q.catalog?'Katalog':'Zusatz'}</span><span class="badge">S. ${q.page}</span><b>${q.id}. ${escapeHtml(q.q)}</b><details><summary>Antwort & Erklärung</summary><div>${escapeHtml(q.answer)}</div><div class="source">${escapeHtml(explainQuestion(q))}</div>${q.image?`<img class="qimg" src="${q.image}" alt="">`:''}</details></div>`).join('');
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function setMode(m){
