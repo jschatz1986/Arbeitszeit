@@ -72,6 +72,7 @@ function nextLearn(){
   $('learnSrc').textContent=current.catalog?`Katalog S. ${current.page}`:`Zusatz S. ${current.page}`;
 }
 function renderQuestion(q,el,learning){
+  el.dataset.answered='0';
   const img=q.image?`<img class="qimg" src="${q.image}" alt="Abbildung aus dem Happy-Nautica-Skript, Seite ${q.page}">`:'';
   el.innerHTML=`${img}<div class="q">${escapeHtml(q.q)}</div><div class="opts">${q.options.map((o,i)=>`<button class="opt" data-i="${i}">${String.fromCharCode(65+i)}. ${escapeHtml(o)}</button>`).join('')}</div><div class="feedback" hidden></div>`;
   el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>choose(q,el,Number(b.dataset.i),learning));
