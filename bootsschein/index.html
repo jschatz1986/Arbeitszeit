@@ -128,10 +128,18 @@ $('nextBtn').onclick=()=>{ $('nextBtn').hidden=true; nextLearn(); };
 $('examNext').onclick=()=>showExam(); $('newExam').onclick=newExam;
 $('reset').onclick=()=>{if(confirm('Lernfortschritt wirklich zurücksetzen?')){state={progress:{}};save();makePool();}};
 updateStats(); makePool();
+window.__bootsscheinStarted=true;
 </script>
 
 
 
+<div id="installBox" class="installbox">
+  <div class="installcard">
+    <h2>App installieren</h2>
+    <div id="installText"></div>
+    <button id="installClose" class="btn">Schließen</button>
+  </div>
+</div>
 <script>
 let deferredInstallPrompt = null;
 const installBtn = document.getElementById('installBtn');
@@ -186,11 +194,5 @@ installBox?.addEventListener('click', e=>{ if(e.target===installBox) installBox.
 
 
 
-<div id="installBox" class="installbox">
-  <div class="installcard">
-    <h2>App installieren</h2>
-    <div id="installText"></div>
-    <button id="installClose" class="btn">Schließen</button>
-  </div>
-</div>
+
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}</script></body></html>
