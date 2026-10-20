@@ -116,6 +116,29 @@ function explainQuestion(q){
   if(q.id===84) return 'Das Lot dient zur Bestimmung der Wassertiefe; als Hilfsmittel nennt das Skript Echolot bzw. Pfeilstock.';
   if(q.id===88) return 'Der Schirokko baut sich langsam auf. Typische Anzeichen können schon vorher auftreten; seine größte Stärke erreicht er laut Fragenkatalog erst nach zwei bis drei Tagen.';
   if(q.id===89) return 'Die Bora ist ein trockener, kalter und böiger Fallwind aus Nord bis Ost. Typisch ist die Borawalze; besonders im Winter kann sie sehr stark werden.';
+  if(q.id===3) return 'Im Fragenkatalog wird das Anlegen gegen Wind und Strom empfohlen, weil das Boot dabei durch die Bewegung des Hecks gegen die Wind- bzw. Stromrichtung gehalten werden kann und manövrierfähig bleibt.';
+  if(q.id===4) return 'Wenn der Motor ausgefallen ist, steht kein Motorschub mehr zum Abbremsen zur Verfügung. Das Skript nennt deshalb den Anker als Mittel, um die Motorjacht zu bremsen.';
+  if(q.id===6) return 'Bei schweren Wellen soll laut Skript nicht gerade auf den Wellenkamm gefahren werden. Der schräge Kurs wird ausdrücklich mit dem Aufkreuzen unter Segeln verglichen.';
+  if(q.id===7) return 'Die Bilge ist im Seemanns-ABC die tiefste Stelle im Inneren des Bootsrumpfs. Der Begriff bezeichnet also nicht irgendeinen Raum im Boot, sondern genau den tiefsten Innenbereich.';
+  if(q.id===8) return 'Das Skript zeigt mehrere Ankertypen, weil unterschiedliche Bauformen für unterschiedliche Gründe und Zugrichtungen geeignet sind. Deshalb gehören mehrere Ankerformen zur üblichen Ausrüstung von Jachten.';
+  if(q.id===9) return 'Bei stärkerer See wird die Schleppleine im Fragenkatalog nicht mit einer festen Meterzahl angegeben. Sie soll ein Vielfaches der Wellenlänge betragen und damit an die Seebedingungen angepasst werden.';
+  if(q.id===10) return 'Auf der Knotenseite wird der doppelte Schotstek als eigener Verbindungsknoten gezeigt. Im Fragenkatalog ist er genau für zwei Leinen mit unterschiedlicher Stärke oder unterschiedlichem Material vorgesehen.';
+  if(q.id===12) return 'Der Fragenkatalog ordnet Sand, Ton und Lehm dem guten Ankergrund zu. Beim Lernen ist wichtig, diese Gruppe von Schlamm, krautigem und steinigem Grund sowie Fels zu unterscheiden.';
+  if(q.id===13) return 'Schlamm, krautiger und steiniger Grund sowie Fels werden im Fragenkatalog gemeinsam als schlechter Ankergrund genannt. Die Gegenüberstellung zu Sand, Ton und Lehm ist hier der Lernschlüssel.';
+  if(q.id===14) return 'Im Kapitel Ankern gilt als Grundregel mindestens etwa die dreifache Wassertiefe. Bei unruhiger See werden mindestens fünfmal, bei Sturm zehnmal und mehr Ankerkette genannt. Deshalb liegt der Prüfwert bei normalen Verhältnissen im Bereich von 3 bis 5 Wassertiefen.';
+  if(q.id===16) return 'Ein Fahrzeug vor Anker muss nachts erkennbar sein. Das Skript verwendet dafür ein weißes Rundumlicht und verlangt, dass es dort gesetzt wird, wo es am besten gesehen werden kann.';
+  if(q.id===17) return 'Das Skript kombiniert mehrere Schutzmaßnahmen gegen Überbordgehen: unnötige Personen bleiben unter Deck, der Kurs soll die Schiffsbewegungen klein halten und Personen an Deck werden mit Sicherungsleinen gesichert.';
+  if(q.id===18) return 'Die Abkürzung cv bedeutet Knoten. Der schwarze Pfeil zeigt die Strömungsrichtung; zusammen mit 3cv ergibt sich daher eine Strömung mit 3 Knoten.';
+  if(q.id===19) return 'Vor dem Start geht es nicht nur um den Motor. Das Skript prüft Öl, Kühlung, Seeventile und Tank, aber auch Vorräte, vollständige Crew, Leerlaufstellung und Personen in unmittelbarer Nähe des Bootes.';
+  if(q.id===20) return 'Auf der Seekarte steht das Kreuz in dieser Frage für eine Untiefe. Das Skript zeigt daneben auch das eigene Kartenzeichen für eine Untiefe mit Felsen, daher müssen beide Symbole unterschieden werden.';
+  if(q.id===25) return 'Positionslichter sollen andere Schiffe bei Dunkelheit erkennen lassen. Deshalb müssen sie laut Skript von Sonnenuntergang bis Sonnenaufgang und zusätzlich bei schlechter Sicht geführt werden.';
+  if(q.id===26) return 'Im Vorschriftenkapitel wird für Gleitfahrt ein Mindestabstand von 300 m zur Küste genannt. Innerhalb dieser Distanz gilt langsame Fahrt mit 5 bis 7 Knoten.';
+  if(q.id===27) return 'Die Einweisung zu Törnbeginn umfasst genau die Dinge, die die Crew im Notfall oder beim Bedienen des Bootes kennen muss: Rettungswesten, Sicherungsleinen, Seenotsignale, Sicherheitsmittel, Motor, Lichter und Feuerlöscher.';
+  if(q.id===29) return 'Die Flagge Alpha bedeutet laut Skript Taucher unten. Das Signal weist also darauf hin, dass sich Personen unter Wasser befinden und entsprechend Rücksicht genommen werden muss.';
+  if(q.id===30) return 'Während der Motorfahrt sollen die wichtigsten Betriebswerte ständig beobachtet werden. Das Skript nennt Temperatur, Öldruck, Ladung und Seewasserkreislauf als laufende Kontrolle.';
+  if(q.id===36) return 'Das Vorschriftenkapitel unterscheidet Naturstrand und eingerichteten Strand. Vor einem Natur- bzw. Freibadestrand sind 150 m Abstand einzuhalten.';
+  if(q.id===37) return 'Bei einer gekennzeichneten bzw. eingerichteten Badezone nennt das Skript 50 m Mindestabstand. Das ist weniger als die 150 m vor einem Naturstrand.';
+  if(q.id===40) return 'Rot über Rot ist die Kennung eines manövrierunfähigen Fahrzeugs. Kommen zusätzlich weiße Ankerlichter dazu, zeigt das Skript damit einen Grundsitzer; diesem soll großräumig ausgewichen werden.';
   if(q.q.includes('Buchstabierbezeichnung')) return 'Im Funkbuchstabieralphabet hat jeder Buchstabe ein festes Codewort, damit er über Funk eindeutig verstanden wird. Hier lautet dieses Codewort: '+a+'.';
   if(q.q.includes('Abkürzung') || q.cat==='Kartenzeichen') return 'Seekarten verwenden feste Zeichen und Abkürzungen, damit Informationen sehr knapp dargestellt werden können. Diese Angabe muss deshalb direkt mit ihrer nautischen Bedeutung verknüpft werden: '+a+'.';
   if(q.cat==='Seezeichen') return 'Seezeichen werden über Farbe, Form und Toppzeichen erkannt. Aus genau diesen Merkmalen ergibt sich hier: '+a+'.';
@@ -137,7 +160,7 @@ function choose(q,el,i,learning){
   const ok=i===q.correct;
   const fb=el.querySelector('.feedback'); fb.hidden=false; fb.className='feedback '+(ok?'good':'bad');
   fb.innerHTML=`<strong>${ok?'Richtig ✓':'Falsch ✕'}</strong><br>Richtige Antwort: ${escapeHtml(q.answer)}
-  <details><summary>Erklärung / nachlesen</summary><div>${escapeHtml(explainQuestion(q))}</div><div class="source">Quelle: Happynautica_BoatSkipper_Skriptum.pdf, Seite ${q.page}</div></details>`;
+  <details><summary>Warum ist das so? / nachlesen</summary><div>${escapeHtml(explainQuestion(q))}</div><div class="source">Quelle: Happynautica_BoatSkipper_Skriptum.pdf, Seite ${q.page}</div></details>`;
   if(learning){
     state.progress[q.id]=ok?'known':'missed'; save(); answered=true; $('nextBtn').hidden=false;
   }else{
